@@ -1,0 +1,105 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="details.css">
+</head>
+
+<div id="container">
+
+    <h1>Country Details</h1>
+    <table>
+        <tr>
+            <td>Code:</td>
+            <td id="code"></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td id="name"></td>
+        </tr>
+        <tr>
+            <td>Continent:</td>
+            <td id="continent"></td>
+        </tr>
+        <tr>
+            <td>Region:</td>
+            <td id="region"></td>
+        </tr>
+        <tr>
+            <td>Surface Area:</td>
+            <td id="surfaceArea"></td>
+        </tr>
+        <tr>
+            <td>Independence Year:</td>
+            <td id="indepYear"></td>
+        </tr>
+        <tr>
+            <td>Population:</td>
+            <td id="population"></td>
+        </tr>
+        <tr>
+            <td>Life Expectancy:</td>
+            <td id="lifeExpectancy"></td>
+        </tr>
+        <tr>
+            <td>GNP:</td>
+            <td id="gnp"></td>
+        </tr>
+        <tr>
+            <td>GNP Old:</td>
+            <td id="gnpOld"></td>
+        </tr>
+        <tr>
+            <td>Local Name:</td>
+            <td id="localName"></td>
+        </tr>
+        <tr>
+            <td>Government Form:</td>
+            <td id="governmentForm"></td>
+        </tr>
+        <tr>
+            <td>Head of State:</td>
+            <td id="headOfState"></td>
+        </tr>
+        <tr>
+            <td>Capital:</td>
+            <td id="capital"></td>
+        </tr>
+        <tr>
+            <td>Code 2:</td>
+            <td id="code2"></td>
+        </tr>
+    </table>
+</div>
+
+
+<script>
+        // Get the ID from the query parameter
+        let urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get("id");
+
+        // Fetch the object with the corresponding ID from your data source
+        fetch(`http://localhost:3000/api/details/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("details",data.details)
+            let country = data.details
+            // Update the HTML content to display the details
+            document.getElementById("code").innerHTML = country.Code;
+            document.getElementById("name").innerHTML = country.Name;
+            document.getElementById("continent").innerHTML = country.Continent;
+            document.getElementById("region").innerHTML = country.Region;
+            document.getElementById("surfaceArea").innerHTML = country.SurfaceArea;
+            document.getElementById("indepYear").innerHTML = country.IndepYear;
+            document.getElementById("population").innerHTML = country.Population;
+            document.getElementById("lifeExpectancy").innerHTML = country.LifeExpectancy;
+            document.getElementById("gnp").innerHTML = country.GNP;
+            document.getElementById("gnpOld").innerHTML = country.GNPold;
+            document.getElementById("localName").innerHTML = country.LocalName;
+            document.getElementById("governmentForm").innerHTML = country.GovernmentForm;
+            document.getElementById("headOfState").innerHTML = country.HeadOfState;
+            document.getElementById("capital").innerHTML = country.Capital;
+            document.getElementById("code2").innerHTML = country.Code2;
+        })
+        .catch(error => console.error(error));
+
+        
+</script>
+  

@@ -1,0 +1,82 @@
+<nav>
+  <ul>
+    <li style="float:right">
+      <a href="login.html">
+      <button type="button" onclick="logout()">Logout</button>
+    </a>
+  </li>
+  </ul>
+</nav>
+
+<head>
+    <link rel="stylesheet"  type="text/css" href="search.css">
+</head>
+
+<h1>Search Page</h1>
+<body>
+    <div class="search-box">
+      <div id="inner-box">
+        <form >
+          <input type="text" name="q" id ="q" onkeypress="suggestion()" class="search-input" placeholder="Search...">
+          <button type="button" class="search-button">Search</button>
+        </form>
+        <div>
+          <div id="suggestions">
+          </div>
+      </div>
+      </div>
+    </div>
+    <script>
+      function logout() {
+        localStorage.removeItem("token");
+        setToken(null);
+      }
+    
+    function suggestion(){
+      const query = document.getElementById('q').value; // The search query entered by the user
+      let container = document.getElementById("suggestions");
+
+      fetch(`http://localhost:3000/api/country?q=${query}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          data = data.docs
+          container.innerHTML = "";
+          for (let i = 0; i < data.length; i++) {
+      // Check if the name matches the search filter
+    
+        // Create a new suggestion element
+        let suggestion = document.createElement("div");
+
+        suggestion.innerHTML = data[i].Name;
+        console.log("suggestion",data[i].Name)
+        suggestion.classList.add("suggestion");
+  
+        // Add an event listener to display the details when the suggestion is clicked
+        suggestion.addEventListener("click", function() {
+       window.location.href = "details.html?id=" + data[i]._id;
+       });
+        // Add the suggestion to the container
+        container.appendChild(suggestion);
+      }
+      })
+      .catch(error => console.error(error));
+    }
+
+    function displayDetails(obj) {
+        let container = document.getElementById("details");
+        
+         // Create a new details element
+      let details = document.createElement("div");
+      details.innerHTML = `
+        <h2>${obj.Name}</h2>
+      `;
+      }
+    </script>
+</body>
+
+

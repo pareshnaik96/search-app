@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="signup.css">
+</head>
+
+<body>
+  <h1>Sign up</h1>
+  <div class="container">
+      <form >
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname">
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname">
+          
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        
+        <label for="phone">Phone:</label>
+        <input type="number" id="phone" name="phone">
+        
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.querySelector('form');
+      form.addEventListener('submit', handleSubmit);
+    
+      function handleSubmit(event) {
+        event.preventDefault(); // prevent the form from submitting normally
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const gender = document.getElementById('gender').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+    
+        // make an API call to the backend using fetch()
+      if(!(firstname && lastname && gender && email && phone )){
+        alert("All fields are required")
+      }else{
+
+        fetch('http://localhost:3000/api/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ firstname, lastname, gender, email, phone  })
+        })
+        .then(response => response.json())
+        .then(window.location.href = "login.html",
+        alert("signup was successful, please login"))
+        .catch(error => console.error(error));
+      }
+
+      }
+    </script>
+  </body>
+  </html>
+
+
+
+ 
+
+
+
+
+
