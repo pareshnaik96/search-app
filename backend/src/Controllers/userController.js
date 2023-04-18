@@ -58,10 +58,10 @@ const signUp = async function (req, res) {
         }
 
         const createUser = await userModel.create(data)
-        res.status(201).send({ status: true, message: "User signup successfully", data: createUser })
+        return res.status(201).send({ status: true, message: "User signup successfully", data: createUser })
 
     } catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message })
     }
 }
 
@@ -132,7 +132,7 @@ const login = async function (req, res) {
         return res.status(200).send({ status: true, message: "login successfully", token: token })
 
     } catch (error) {
-        res.status(500).send({ status: false, message: error.message })
+        return res.status(500).send({ status: false, message: error.message })
     }
 }
 

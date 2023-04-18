@@ -39,6 +39,4 @@ async function sendEmail(req) {
 
 
 
-
-
 module.exports = { sendEmail }

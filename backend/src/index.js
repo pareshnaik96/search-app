@@ -26,7 +26,6 @@ app.use((req, res, next) => {
 app.use('/', route);
 
 
-
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
 });

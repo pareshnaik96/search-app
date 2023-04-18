@@ -1,82 +1,173 @@
 <nav>
   <ul>
-    <li style="float:right">
+    <li style="float: right">
       <a href="login.html">
-      <button type="button" onclick="logout()">Logout</button>
-    </a>
-  </li>
+        <button type="button" onclick="logout()">Logout</button>
+      </a>
+    </li>
   </ul>
 </nav>
 
 <head>
-    <link rel="stylesheet"  type="text/css" href="search.css">
+  <link rel="stylesheet" type="text/css" href="search.css" />
 </head>
 
 <h1>Search Page</h1>
 <body>
-    <div class="search-box">
-      <div id="inner-box">
-        <form >
-          <input type="text" name="q" id ="q" onkeypress="suggestion()" class="search-input" placeholder="Search...">
-          <button type="button" class="search-button">Search</button>
-        </form>
-        <div>
-          <div id="suggestions">
-          </div>
-      </div>
+  <div class="search-box">
+    <div id="inner-box">
+      <label for="search-by">Search by:</label>
+      <select id="search-by" name="search-by">
+        <option value="city">City</option>
+        <option value="country">Country</option>
+        <option value="language">Language</option>
+      </select>
+
+      <form>
+        <input
+          type="text"
+          name="q"
+          id="q"
+          onkeypress="suggestion()"
+          class="search-input"
+          placeholder="Search..."
+        />
+        <button type="button" class="search-button" onclick="search()">
+          Search
+        </button>
+      </form>
+      <div>
+        <div id="suggestions"></div>
       </div>
     </div>
-    <script>
-      function logout() {
-        localStorage.removeItem("token");
-        setToken(null);
-      }
-    
-    function suggestion(){
-      const query = document.getElementById('q').value; // The search query entered by the user
+  </div>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("token");
+      setToken(null);
+    }
+
+    function suggestion() {
+      // Get the select element and add an event listener to it
+      let select = document.getElementById("search-by");
+
+      let value = select.value;
+      const query = document.getElementById("q").value; // The search query entered by the user
       let container = document.getElementById("suggestions");
 
-      fetch(`http://localhost:3000/api/country?q=${query}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          data = data.docs
-          container.innerHTML = "";
-          for (let i = 0; i < data.length; i++) {
-      // Check if the name matches the search filter
-    
-        // Create a new suggestion element
-        let suggestion = document.createElement("div");
-
-        suggestion.innerHTML = data[i].Name;
-        console.log("suggestion",data[i].Name)
-        suggestion.classList.add("suggestion");
-  
-        // Add an event listener to display the details when the suggestion is clicked
-        suggestion.addEventListener("click", function() {
-       window.location.href = "details.html?id=" + data[i]._id;
-       });
-        // Add the suggestion to the container
-        container.appendChild(suggestion);
+      // Define the API endpoint URLs based on the selected value
+      let apiUrl;
+      switch (value) {
+        case "city":
+          apiUrl = `http://localhost:3000/api/city?q=${query}`;
+          break;
+        case "country":
+          apiUrl = `http://localhost:3000/api/country?q=${query}`;
+          break;
+        case "language":
+          apiUrl = `http://localhost:3000/api/language?q=${query}`;
+          break;
+        default:
+          apiUrl = "";
       }
+
+      // Fetch the data from the API
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch(error => console.error(error));
+        .then((response) => response.json())
+        .then((data) => {
+          data = data.docs;
+          container.innerHTML = "";
+          if (value == "city") {
+            for (let i = 0; i < data.length - 1; i++) {
+              // Check if the name matches the search filter
+              // Create a new suggestion element
+              let suggestion = document.createElement("div");
+
+              suggestion.innerHTML = data[i].Name;
+
+              suggestion.classList.add("suggestion");
+              localStorage.removeItem("details");
+
+              // Add an event listener to display the details when the suggestion is clicked
+              suggestion.addEventListener("click", function () {
+                localStorage.setItem("details", JSON.stringify(data[i]));
+                localStorage.setItem("value", value);
+                // window.location.href = "details.html?id=";
+                document.getElementById("q").value = data[i].Name;
+              });
+              // Add the suggestion to the container
+              container.appendChild(suggestion);
+            }
+          }
+          if (value == "country") {
+            for (let i = 0; i < data.length; i++) {
+              // Check if the name matches the search filter
+              // Create a new suggestion element
+              let suggestion = document.createElement("div");
+
+              suggestion.innerHTML = data[i].Name;
+
+              suggestion.classList.add("suggestion");
+
+              localStorage.removeItem("details");
+
+              // Add an event listener to display the details when the suggestion is clicked
+              suggestion.addEventListener("click", function () {
+                localStorage.setItem("details", JSON.stringify(data[i]));
+                localStorage.setItem("value", value);
+                // window.location.href = "details.html?id=";
+                document.getElementById("q").value = data[i].Name;
+              });
+              // Add the suggestion to the container
+              container.appendChild(suggestion);
+            }
+          }
+          if (value == "language") {
+            for (let i = 0; i < data.length; i++) {
+              // Check if the name matches the search filter
+              // Create a new suggestion element
+              let suggestion = document.createElement("div");
+
+              suggestion.innerHTML = data[i].Language;
+
+              suggestion.classList.add("suggestion");
+
+              localStorage.removeItem("details");
+
+              // Add an event listener to display the details when the suggestion is clicked
+              suggestion.addEventListener("click", function () {
+                localStorage.setItem("details", JSON.stringify(data[i]));
+                localStorage.setItem("value", value);
+                // window.location.href = "details.html?id=";
+                document.getElementById("q").value = data[i].Language;
+              });
+              // Add the suggestion to the container
+              container.appendChild(suggestion);
+            }
+          }
+        })
+        .catch((error) => console.error(error));
     }
 
     function displayDetails(obj) {
-        let container = document.getElementById("details");
-        
-         // Create a new details element
+      let container = document.getElementById("details");
+
+      // Create a new details element
       let details = document.createElement("div");
       details.innerHTML = `
-        <h2>${obj.Name}</h2>
-      `;
-      }
-    </script>
+          <h2>${obj.Name}</h2>
+        `;
+    }
+    // when click on div of suggestion will set the input
+    // & after clicking on search button the search should happen for particular input
+    function search() {
+      window.location.href = "details.html?id=";
+    }
+  </script>
 </body>
-
-
