@@ -1,105 +1,218 @@
 <head>
-    <link rel="stylesheet" type="text/css" href="details.css">
+  <link rel="stylesheet" type="text/css" href="details.css" />
 </head>
 
-<div id="container">
-
-    <h1>Country Details</h1>
-    <table>
-        <tr>
-            <td>Code:</td>
-            <td id="code"></td>
-        </tr>
-        <tr>
-            <td>Name:</td>
-            <td id="name"></td>
-        </tr>
-        <tr>
-            <td>Continent:</td>
-            <td id="continent"></td>
-        </tr>
-        <tr>
-            <td>Region:</td>
-            <td id="region"></td>
-        </tr>
-        <tr>
-            <td>Surface Area:</td>
-            <td id="surfaceArea"></td>
-        </tr>
-        <tr>
-            <td>Independence Year:</td>
-            <td id="indepYear"></td>
-        </tr>
-        <tr>
-            <td>Population:</td>
-            <td id="population"></td>
-        </tr>
-        <tr>
-            <td>Life Expectancy:</td>
-            <td id="lifeExpectancy"></td>
-        </tr>
-        <tr>
-            <td>GNP:</td>
-            <td id="gnp"></td>
-        </tr>
-        <tr>
-            <td>GNP Old:</td>
-            <td id="gnpOld"></td>
-        </tr>
-        <tr>
-            <td>Local Name:</td>
-            <td id="localName"></td>
-        </tr>
-        <tr>
-            <td>Government Form:</td>
-            <td id="governmentForm"></td>
-        </tr>
-        <tr>
-            <td>Head of State:</td>
-            <td id="headOfState"></td>
-        </tr>
-        <tr>
-            <td>Capital:</td>
-            <td id="capital"></td>
-        </tr>
-        <tr>
-            <td>Code 2:</td>
-            <td id="code2"></td>
-        </tr>
-    </table>
+<div id="cities">
+  <h1>City Details</h1>
+  <table>
+    <tr>
+      <td>ID:</td>
+      <td id="id"></td>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td id="c-name"></td>
+    </tr>
+    <tr>
+      <td>Country Code:</td>
+      <td id="c-countryCode"></td>
+    </tr>
+    <tr>
+      <td>District:</td>
+      <td id="c-district"></td>
+    </tr>
+    <tr>
+      <td>Population:</td>
+      <td id="c-population"></td>
+    </tr>
+  </table>
 </div>
 
+<div id="languages">
+  <h1>Language Details</h1>
+  <table>
+    <tr>
+      <td>Country Code:</td>
+      <td id="l-countryCode"></td>
+    </tr>
+    <tr>
+      <td>Language:</td>
+      <td id="language"></td>
+    </tr>
+    <tr>
+      <td>Is Official:</td>
+      <td id="isOfficial"></td>
+    </tr>
+    <tr>
+      <td>Percentage:</td>
+      <td id="percentage"></td>
+    </tr>
+  </table>
+</div>
+
+<div id="countries">
+  <h1>Country Details</h1>
+  <table>
+    <tr>
+      <td>Code:</td>
+      <td id="code"></td>
+    </tr>
+    <tr>
+      <td>Name:</td>
+      <td id="name"></td>
+    </tr>
+    <tr>
+      <td>Continent:</td>
+      <td id="continent"></td>
+    </tr>
+    <tr>
+      <td>Region:</td>
+      <td id="region"></td>
+    </tr>
+    <tr>
+      <td>Surface Area:</td>
+      <td id="surfaceArea"></td>
+    </tr>
+    <tr>
+      <td>Independence Year:</td>
+      <td id="indepYear"></td>
+    </tr>
+    <tr>
+      <td>Population:</td>
+      <td id="population"></td>
+    </tr>
+    <tr>
+      <td>Life Expectancy:</td>
+      <td id="lifeExpectancy"></td>
+    </tr>
+    <tr>
+      <td>GNP:</td>
+      <td id="gnp"></td>
+    </tr>
+    <tr>
+      <td>GNP Old:</td>
+      <td id="gnpOld"></td>
+    </tr>
+    <tr>
+      <td>Local Name:</td>
+      <td id="localName"></td>
+    </tr>
+    <tr>
+      <td>Government Form:</td>
+      <td id="governmentForm"></td>
+    </tr>
+    <tr>
+      <td>Head of State:</td>
+      <td id="headOfState"></td>
+    </tr>
+    <tr>
+      <td>Capital:</td>
+      <td id="capital"></td>
+    </tr>
+    <tr>
+      <td>Code 2:</td>
+      <td id="code2"></td>
+    </tr>
+  </table>
+</div>
 
 <script>
-        // Get the ID from the query parameter
-        let urlParams = new URLSearchParams(window.location.search);
-        let id = urlParams.get("id");
+  let obj = JSON.parse(localStorage.getItem("details"));
+  let value = localStorage.getItem("value");
 
-        // Fetch the object with the corresponding ID from your data source
-        fetch(`http://localhost:3000/api/details/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("details",data.details)
-            let country = data.details
-            // Update the HTML content to display the details
-            document.getElementById("code").innerHTML = country.Code;
-            document.getElementById("name").innerHTML = country.Name;
-            document.getElementById("continent").innerHTML = country.Continent;
-            document.getElementById("region").innerHTML = country.Region;
-            document.getElementById("surfaceArea").innerHTML = country.SurfaceArea;
-            document.getElementById("indepYear").innerHTML = country.IndepYear;
-            document.getElementById("population").innerHTML = country.Population;
-            document.getElementById("lifeExpectancy").innerHTML = country.LifeExpectancy;
-            document.getElementById("gnp").innerHTML = country.GNP;
-            document.getElementById("gnpOld").innerHTML = country.GNPold;
-            document.getElementById("localName").innerHTML = country.LocalName;
-            document.getElementById("governmentForm").innerHTML = country.GovernmentForm;
-            document.getElementById("headOfState").innerHTML = country.HeadOfState;
-            document.getElementById("capital").innerHTML = country.Capital;
-            document.getElementById("code2").innerHTML = country.Code2;
-        })
-        .catch(error => console.error(error));
+  if (value == "city") {
+    document.getElementById("cities").style.display = "table";
+    document.getElementById("countries").style.display = "table";
+    document.getElementById("languages").style.display = "none";
 
-        
+    // Display city details
+    document.getElementById("id").innerHTML = obj.ID;
+    document.getElementById("c-name").innerHTML = obj.Name;
+    document.getElementById("c-countryCode").innerHTML = obj.CountryCode;
+    document.getElementById("c-district").innerHTML = obj.District;
+    document.getElementById("c-population").innerHTML = obj.Population;
+
+    // Display country details
+    document.getElementById("code").innerHTML = obj.country[0].Code;
+    document.getElementById("name").innerHTML = obj.country[0].Name;
+    document.getElementById("continent").innerHTML = obj.country[0].Continent;
+    document.getElementById("region").innerHTML = obj.country[0].Region;
+    document.getElementById("surfaceArea").innerHTML =
+      obj.country[0].SurfaceArea;
+    document.getElementById("indepYear").innerHTML = obj.country[0].IndepYear;
+    document.getElementById("population").innerHTML = obj.country[0].Population;
+    document.getElementById("lifeExpectancy").innerHTML =
+      obj.country[0].LifeExpectancy;
+    document.getElementById("gnp").innerHTML = obj.country[0].GNP;
+    document.getElementById("gnpOld").innerHTML = obj.country[0].GNPOld;
+    document.getElementById("localName").innerHTML = obj.country[0].LocalName;
+    document.getElementById("governmentForm").innerHTML =
+      obj.country[0].GovernmentForm;
+    document.getElementById("headOfState").innerHTML =
+      obj.country[0].HeadOfState;
+    document.getElementById("capital").innerHTML = obj.country[0].Capital;
+    document.getElementById("code2").innerHTML = obj.country[0].Code2;
+  }
+
+  if (value == "country") {
+    document.getElementById("countries").style.display = "table";
+    document.getElementById("cities").style.display = "none";
+    document.getElementById("languages").style.display = "none";
+
+    // Display country details
+    document.getElementById("code").innerHTML = obj.Code;
+    document.getElementById("name").innerHTML = obj.Name;
+    document.getElementById("continent").innerHTML = obj.Continent;
+    document.getElementById("region").innerHTML = obj.Region;
+    document.getElementById("surfaceArea").innerHTML = obj.SurfaceArea;
+    document.getElementById("indepYear").innerHTML = obj.IndepYear;
+    document.getElementById("population").innerHTML = obj.Population;
+    document.getElementById("lifeExpectancy").innerHTML = obj.LifeExpectancy;
+    document.getElementById("gnp").innerHTML = obj.GNP;
+    document.getElementById("gnpOld").innerHTML = obj.GNPOld;
+    document.getElementById("localName").innerHTML = obj.LocalName;
+    document.getElementById("governmentForm").innerHTML = obj.GovernmentForm;
+    document.getElementById("headOfState").innerHTML = obj.HeadOfState;
+    document.getElementById("capital").innerHTML = obj.Capital;
+    document.getElementById("code2").innerHTML = obj.Code2;
+  }
+
+  if (value == "language") {
+    document.getElementById("languages").style.display = "table";
+    document.getElementById("countries").style.display = "table";
+    document.getElementById("cities").style.display = "none";
+
+    // Display language details
+    document.getElementById("l-countryCode").innerHTML = obj.CountryCode;
+    document.getElementById("language").innerHTML = obj.Language;
+    document.getElementById("isOfficial").innerHTML = obj.IsOfficial;
+    document.getElementById("percentage").innerHTML = obj.Percentage;
+
+    // Display country details
+    document.getElementById("code").innerHTML = obj.country[0].Code;
+    document.getElementById("name").innerHTML = obj.country[0].Name;
+    document.getElementById("continent").innerHTML = obj.country[0].Continent;
+    document.getElementById("region").innerHTML = obj.country[0].Region;
+    document.getElementById("surfaceArea").innerHTML =
+      obj.country[0].SurfaceArea;
+    document.getElementById("indepYear").innerHTML = obj.country[0].IndepYear;
+    document.getElementById("population").innerHTML = obj.country[0].Population;
+    document.getElementById("lifeExpectancy").innerHTML =
+      obj.country[0].LifeExpectancy;
+    document.getElementById("gnp").innerHTML = obj.country[0].GNP;
+    document.getElementById("gnpOld").innerHTML = obj.country[0].GNPOld;
+    document.getElementById("localName").innerHTML = obj.country[0].LocalName;
+    document.getElementById("governmentForm").innerHTML =
+      obj.country[0].GovernmentForm;
+    document.getElementById("headOfState").innerHTML =
+      obj.country[0].HeadOfState;
+    document.getElementById("capital").innerHTML = obj.country[0].Capital;
+    document.getElementById("code2").innerHTML = obj.country[0].Code2;
+
+    // Display language details
+    document.getElementById("l-countryCode").innerHTML = obj.CountryCode;
+    document.getElementById("language").innerHTML = obj.Language;
+    document.getElementById("isOfficial").innerHTML = obj.IsOfficial;
+    document.getElementById("percentage").innerHTML = obj.Percentage;
+  }
 </script>
-  

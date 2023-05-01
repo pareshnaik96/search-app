@@ -8,5 +8,5 @@ const languageSchema = new mongoose.Schema({
     Percentage: Number
 });
 
-module.exports = mongoose.model('Language', languageSchema);
+module.exports = mongoose.model('Countrylanguages', languageSchema);
 

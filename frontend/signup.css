@@ -45,7 +45,8 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
 
-  button[type="submit"] {
+  button[type="submit"],
+  button[type="button"]{
     display: block;
     width: 100%;
     padding: 10px;
@@ -56,11 +57,14 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px;
   }
 
-  button[type="submit"]:hover {
+  button[type="submit"]:hover ,
+  button[type="button"]:hover{
     background-color: #444;
   }
+
 
   /* Style the form for smaller screens  */
     @media screen and (max-width: 600px) {
