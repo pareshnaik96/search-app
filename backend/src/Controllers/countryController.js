@@ -17,7 +17,7 @@ const getCountry = async function (req, res) {
 
         const keyword = query; // The keyword entered by the user
         const getDetails = await countryModel.find({ Name: { $regex: new RegExp(`^${keyword}`, "i") } }).exec();
-        return resstatus(200).send({ status: true, message: "country get successfully", docs: getDetails })
+        return res.status(200).send({ status: true, message: "country get successfully", docs: getDetails })
 
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message })
