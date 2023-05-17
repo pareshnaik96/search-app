@@ -1,4 +1,4 @@
-### search-app
+# search-app
 
 ### Key Points
 
